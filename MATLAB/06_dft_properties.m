@@ -1,50 +1,84 @@
 % Practical 06 - Verification of DFT Properties
 clc;
-clear all;
+clear;
 close all;
-N = 8;
-x1 = [1 2 3 4 0 0 0 0];
-x2 = [2 1 2 1 0 0 0 0];
 
-% Linearity property
-a1 = 0.5;
-a2 = 0.5;
-X1 = fft(x1,N);
-X2 = fft(x2,N);
-x3 = (a1*x1) + (a2*x2);
-X3 = fft(x3,N);
-X4 = (a1*X1) + (a2*X2);
-K = 0:N-1;
+% Inputs for the practical
+N = 4;
+x1 = [1 2 3 4];
+x2 = [2 1 2 1];
+p = 2;
+q = 3;
+k = 0:N-1;
+
+% DFTs of the two input sequences
+X1 = fft(x1, N);
+X2 = fft(x2, N);
+
+%% A) Linearity property
+x3 = p*x1 + q*x2;          % Combine sequences in time domain
+X3 = fft(x3, N);           % DFT of combined sequence
+X4 = p*X1 + q*X2;         % Combine DFTs in frequency domain
+
+fprintf('Linearity property verified: %s\n', ...
+    mat2str(round(X3, 10) == round(X4, 10)));
+
 figure;
 subplot(2,1,1);
-stem(K,abs(X3));
-title('DFT of Linear Combination'); xlabel('K'); ylabel('|X3|');
-subplot(2,1,2);
-stem(K,abs(X4));
-title('Linear Combination of DFTs'); xlabel('K'); ylabel('|X4|');
+stem(k, abs(X3), 'filled');
+title('DFT of Combined Sequence');
+xlabel('Frequency Bin k'); ylabel('Magnitude'); grid on;
 
-% Time shifting property
-P = 2;
-x5 = circshift(x2,P);
-X5 = fft(x5,N);
-X5_mag = abs(X5);
-X5_ph = angle(X5);
+subplot(2,1,2);
+stem(k, abs(X4), 'filled');
+title('Weighted Sum of Individual DFTs');
+xlabel('Frequency Bin k'); ylabel('Magnitude'); grid on;
+
+%% B) Circular time-shifting property
+m = 3;
+xs = circshift(x1, m);      % Circular shift to the right by m samples
+Xs = fft(xs, N);
+Xs_theory = X1 .* exp(-1j*2*pi*k*m/N);
+
+fprintf('Time-shifting property verified: %s\n', ...
+    mat2str(round(Xs, 10) == round(Xs_theory, 10)));
+
+figure;
+subplot(2,2,1);
+stem(k, abs(X1), 'filled');
+title('Original Magnitude Spectrum');
+xlabel('Frequency Bin k'); ylabel('|X_1[k]|'); grid on;
+
+subplot(2,2,2);
+stem(k, abs(Xs), 'filled');
+title('Shifted Magnitude Spectrum');
+xlabel('Frequency Bin k'); ylabel('|X_s[k]|'); grid on;
+
+subplot(2,2,3);
+stem(k, angle(X1), 'filled');
+title('Original Phase Spectrum');
+xlabel('Frequency Bin k'); ylabel('Phase (rad)'); grid on;
+
+subplot(2,2,4);
+stem(k, angle(Xs), 'filled');
+title('Shifted Phase Spectrum');
+xlabel('Frequency Bin k'); ylabel('Phase (rad)'); grid on;
+
+%% C) Circular convolution property
+Xproduct = X1 .* X2;
+xc_from_dft = ifft(Xproduct, N);
+xc_direct = cconv(x1, x2, N);
+
+fprintf('Circular convolution property verified: %s\n', ...
+    mat2str(round(xc_from_dft, 10) == round(xc_direct, 10)));
+
 figure;
 subplot(2,1,1);
-stem(K,X5_mag);
-title('Magnitude of Time Shifted DFT'); xlabel('K'); ylabel('|X5|'); grid on;
-subplot(2,1,2);
-stem(K,X5_ph);
-title('Phase of Time Shifted DFT'); xlabel('K'); ylabel('Phase'); grid on;
+stem(k, real(xc_from_dft), 'filled');
+title('IDFT of Product of DFTs');
+xlabel('Sample n'); ylabel('Amplitude'); grid on;
 
-% Circular convolution property
-Xprod = X1 .* X2;
-xnew = ifft(Xprod,N);
-xnew1 = cconv(x1,x2,N);
-figure;
-subplot(2,1,1);
-stem(K,abs(xnew));
-title('IFFT of Product of DFTs'); xlabel('K'); ylabel('Amplitude'); grid on;
 subplot(2,1,2);
-stem(K,abs(xnew1));
-title('Circular Convolution'); xlabel('K'); ylabel('Amplitude'); grid on;
+stem(k, xc_direct, 'filled');
+title('Direct Circular Convolution');
+xlabel('Sample n'); ylabel('Amplitude'); grid on;
