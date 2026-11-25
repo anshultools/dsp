@@ -1,110 +1,136 @@
 # Practical 09A — Design and Implementation of High-Pass FIR Filter Using Hamming Window
 
 ## Aim
-To design and implement a high-pass Finite Impulse Response (FIR) filter using a Hamming window in MATLAB and observe its frequency response and filtering effect.
+To design and implement a high-pass Finite Impulse Response (FIR) filter using a Hamming window in MATLAB, and to observe its frequency response and filtering effect.
 
 ## Apparatus
-MATLAB
+MATLAB software.
 
 ## Theory
-An **FIR filter** has an impulse response of finite duration. Its output is calculated from the present and a fixed number of past input samples:
+
+### 1. High-pass FIR filter
+A **high-pass filter** allows high-frequency components to pass while reducing low-frequency components.
+
+An **FIR filter** has a finite-duration impulse response. Its output is calculated using the present input sample and a fixed number of previous input samples:
 
 \[
-y[n]=\sum_{k=0}^{M}b[k]x[n-k]
+y[n]=\sum_{k=0}^{N}b[k]x[n-k]
 \]
 
-where \(b[k]\) are the filter coefficients and \(M\) is the filter order.
+Here, \(x[n]\) is the input sequence, \(y[n]\) is the filtered output, \(b[k]\) are the filter coefficients, and \(N\) is the filter order.
 
-A **high-pass filter** allows higher-frequency components to pass and attenuates lower-frequency components. The Hamming window is used to truncate the ideal filter response smoothly and reduce unwanted sidelobes.
-
-The Hamming window of length \(L\) is:
+### 2. Generation of the input signal
+Three sine waves are generated with frequencies of 10 Hz, 20 Hz, and 30 Hz:
 
 \[
-w_H[n]=0.54-0.46\cos\left(\frac{2\pi n}{L-1}\right),
-\quad 0\leq n\leq L-1
+x_1(t)=\sin(2\pi f_1t),\qquad
+x_2(t)=\sin(2\pi f_2t),\qquad
+x_3(t)=\sin(2\pi f_3t)
 \]
 
-The filter is designed in MATLAB using `fir1()`. The cutoff frequency supplied to `fir1()` is normalized from 0 to 1, where 1 represents the Nyquist frequency \(F_s/2\).
-
-## Given specifications
-
-The input signal contains three sinusoidal components:
+These signals are added to form the composite input:
 
 \[
-f_1=10\,\text{Hz},\quad f_2=20\,\text{Hz},\quad f_3=30\,\text{Hz}
+x(t)=x_1(t)+x_2(t)+x_3(t)
 \]
 
-The composite input is:
+The highest input frequency is 30 Hz. The sampling frequency is chosen as four times this value:
 
 \[
-x(t)=\sin(2\pi f_1t)+\sin(2\pi f_2t)+\sin(2\pi f_3t)
+F_s=4f_{\max}=4\times30=120\,\text{Hz}
 \]
 
-Sampling frequency:
+The sampling interval is \(T_s=1/F_s=1/120\) seconds. A one-second record contains 120 samples, with the time vector running from 0 to \(1-T_s\).
+
+### 3. Hamming window
+A window is applied to the ideal filter response to obtain a finite number of filter coefficients. The **Hamming window** reduces sidelobes (unwanted ripples) in the frequency response compared with a rectangular window.
+
+For a filter order of \(N\), the Hamming window contains \(N+1\) samples:
 
 \[
-F_s=4\times f_{\max}=4\times30=120\,\text{Hz}
+w[n]=0.54-0.46\cos\left(\frac{2\pi n}{N}\right),
+\quad 0\leq n\leq N
 \]
 
-### High-pass filter design calculations
+In MATLAB, `hamming(N+1)` generates this window.
 
-- Passband edge frequency: \(f_{pb}=30\,\text{Hz}\)
-- Stopband edge frequency: \(f_{sb}=0.6f_{pb}=18\,\text{Hz}\)
+### 4. High-pass filter specifications
+The stopband edge is set to 10 Hz, and the passband edge is set to 20 Hz:
 
-Normalized transition width:
+\[
+f_{sb}=10\,\text{Hz},\qquad f_{pb}=20\,\text{Hz}
+\]
+
+Frequencies below 10 Hz are in the stopband and are attenuated. Frequencies above 20 Hz are in the passband and are allowed to pass. The region from 10 Hz to 20 Hz is the **transition band**.
+
+The normalized transition width is:
 
 \[
 \Delta f=\frac{f_{pb}-f_{sb}}{F_s}
-=\frac{30-18}{120}=0.1
+=\frac{20-10}{120}=0.0833
 \]
 
-Normalized passband and stopband edge frequencies:
+The normalized passband and stopband edge frequencies are:
 
 \[
-W_{pb}=\frac{2f_{pb}}{F_s}=0.5
+W_{pb}=\frac{2f_{pb}}{F_s}
+=\frac{2\times20}{120}=0.3333
 \]
 
 \[
-W_{sb}=\frac{2f_{sb}}{F_s}=0.3
+W_{sb}=\frac{2f_{sb}}{F_s}
+=\frac{2\times10}{120}=0.1667
 \]
 
-Normalized cutoff frequency:
+The normalized cutoff frequency is selected as the midpoint:
 
 \[
 W_c=\frac{W_{pb}+W_{sb}}{2}
-=\frac{0.5+0.3}{2}=0.4
+=\frac{0.3333+0.1667}{2}=0.25
 \]
 
-This corresponds to a cutoff frequency of:
+For MATLAB's `fir1()`, a normalized frequency of 1 represents the Nyquist frequency \(F_s/2\). Therefore, the cutoff frequency in hertz is:
 
 \[
-f_c=W_c\frac{F_s}{2}=0.4\times60=24\,\text{Hz}
+f_c=W_c\frac{F_s}{2}
+=0.25\times60=15\,\text{Hz}
 \]
 
-Filter length and order:
+### 5. Filter order and window length
+The approximate Hamming-window filter order is calculated as:
 
 \[
-L=\left\lceil\frac{3.3}{\Delta f}\right\rceil
-=\left\lceil33\right\rceil=33
+N=\operatorname{round}\left(\frac{3.3}{\Delta f}\right)
+=\operatorname{round}\left(\frac{3.3}{0.0833}\right)=40
 \]
+
+The Hamming window length is one more than the filter order:
 
 \[
-M=L-1=32
+L=N+1=41\,\text{samples}
 \]
 
-The passband starts at 30 Hz and the stopband ends at 18 Hz. Frequencies between 18 Hz and 30 Hz form the transition band.
+Therefore, the FIR filter has 41 coefficients and order 40.
+
+### 6. MATLAB functions used
+- `hamming(N+1)` generates the Hamming window with 41 samples.
+- `fir1(N,W_c,'high',window)` calculates the high-pass FIR filter coefficients.
+- `freqz(b,1)` displays the magnitude and phase frequency responses.
+- `filter(b,1,x)` applies the filter to the composite input signal.
+- `fft()` calculates the frequency components of the original and filtered signals.
+- `abs()` calculates the magnitude of the FFT values.
 
 ## Algorithm
-1. Clear the MATLAB workspace, command window, and figures.
+1. Clear the MATLAB command window and workspace, and close all open figures using `clc`, `clear`, and `close all`.
 2. Define the input frequencies as 10 Hz, 20 Hz, and 30 Hz.
-3. Calculate the sampling frequency as four times the highest input frequency.
-4. Generate the three sinusoidal signals and add them to obtain the composite input.
-5. Set the high-pass filter specifications: passband edge 30 Hz and stopband edge 18 Hz.
-6. Calculate the normalized transition width, normalized cutoff frequency, filter length, and filter order.
-7. Generate a Hamming window and design the high-pass FIR filter using `fir1()`.
-8. Plot the filter frequency response using `freqz()`.
-9. Filter the composite signal using `filter()`.
-10. Calculate and plot the single-sided FFT magnitude spectra of the original and filtered signals.
+3. Calculate the sampling frequency as \(F_s=120\,\text{Hz}\) and create a one-second time vector using the sampling interval \(T_s=1/F_s\).
+4. Generate the three sine waves and add them to form the composite signal \(x(t)\).
+5. Set the stopband edge frequency to \(f_{sb}=10\,\text{Hz}\) and the passband edge frequency to \(f_{pb}=20\,\text{Hz}\).
+6. Calculate the normalized transition width, normalized cutoff frequency, and filter order \(N=\operatorname{round}(3.3/\Delta f)\).
+7. Generate the Hamming window using `hamming(N+1)` and design the high-pass FIR filter using `fir1(N,W_c,'high',window)`.
+8. Plot the magnitude and phase responses of the filter using `freqz(b,1)`.
+9. Apply the filter to the composite signal using `filter(b,1,x)`.
+10. Calculate the FFT magnitudes of the original and filtered signals. Plot their frequency spectra against the frequency axis and compare the results.
 
 ## Conclusion
-A high-pass FIR filter was designed using a Hamming window in MATLAB. The filter attenuates the lower-frequency components and allows the higher-frequency component in the passband to pass. The frequency response and FFT spectra were plotted to observe the filtering effect.
+The high-pass FIR filter was designed and implemented using a Hamming window in MATLAB. The 10 Hz component lies in the stopband and is attenuated, while the 20 Hz and 30 Hz components lie at or above the passband edge and are allowed to pass. The magnitude and phase responses, along with the FFT spectra of the input and filtered signals, are used to observe the filtering effect.
