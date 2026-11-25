@@ -1,26 +1,28 @@
-% Practical 04 - Verification of DTFT Properties
+% Practical 04 - Time-Shifting Property of DTFT
 clc;
 clear;
 close all;
-w = (-pi:(pi/1000):pi);
-% DTFT of x(n) = (0.25)^n u(n)
-x_dtft = 1 ./ (1 - 0.25*exp(-1j*w));
-% DTFT of shifted signal (source comment says n-2; exponent uses delay 3)
-x_shift_dtft = exp(-3j*w) .* x_dtft;
-x_dtft_mag = abs(x_dtft);
-x_dtft_phase = angle(x_dtft);
-x_shift_mag = abs(x_shift_dtft);
-x_shift_phase = angle(x_shift_dtft);
+w = (-1:0.001:1)*pi;
+X_dtft = 1 ./ (1 - 0.25*exp(-1j*w));
+X_s = exp(-1j*2*w).*X_dtft;
+X_mag = abs(X_dtft);
+X_phase = angle(X_dtft);
+X_s_mag = abs(X_s);
+X_s_phase = angle(X_s);
 figure;
 subplot(2,2,1);
-plot(w,x_dtft_mag); grid on;
-title('Magnitude of X(e^{j\omega})'); xlabel('\omega'); ylabel('Magnitude');
+plot(w,X_mag); grid on;
+title('Magnitude of Original DTFT');
+xlabel('Frequency (rad/sample)'); ylabel('Magnitude');
 subplot(2,2,2);
-plot(w,x_dtft_phase); grid on;
-title('Phase of X(e^{j\omega})'); xlabel('\omega'); ylabel('Phase');
+plot(w,X_phase); grid on;
+title('Phase of Original DTFT');
+xlabel('Frequency (rad/sample)'); ylabel('Phase (radians)');
 subplot(2,2,3);
-plot(w,x_shift_mag); grid on;
-title('Magnitude of X_s(e^{j\omega})'); xlabel('\omega'); ylabel('Magnitude');
+plot(w,X_s_mag); grid on;
+title('Magnitude of Delayed DTFT (2 Samples)');
+xlabel('Frequency (rad/sample)'); ylabel('Magnitude');
 subplot(2,2,4);
-plot(w,x_shift_phase); grid on;
-title('Phase of X_s(e^{j\omega})'); xlabel('\omega'); ylabel('Phase');
+plot(w,X_s_phase); grid on;
+title('Phase of Delayed DTFT (2 Samples)');
+xlabel('Frequency (rad/sample)'); ylabel('Phase (radians)');
