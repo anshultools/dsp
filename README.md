@@ -6,11 +6,11 @@ Digital Signal Processing (DSP) practicals and MATLAB code.
 
 | Sr. No. | Practical | Write-Up | Code / File |
 |---|---|---|---|
-| 01 | Practical 01 | [Open Write-Up](practicals/01-practical.md) | — |
-| 02 | Practical 02 | [Open Write-Up](practicals/02-practical.md) | — |
-| 03 | Practical 03 | [Open Write-Up](practicals/03-practical.md) | — |
-| 04 | Practical 04 | [Open Write-Up](practicals/04-practical.md) | — |
-| 05 | Practical 05 | [Open Write-Up](practicals/05-practical.md) | — |
+| 01 | Verification of Sampling Theorem | [Open Write-Up](practicals/01-practical.md) | [MATLAB Script](MATLAB/01_01_sampling_theorem.m) |
+| 02 | Solution of Difference Equation with Initial Condition | [Open Write-Up](practicals/02-practical.md) | [MATLAB Script](MATLAB/02_02_difference_equation.m) |
+| 03 | Computation of DTFT | [Open Write-Up](practicals/03-practical.md) | [MATLAB Script](MATLAB/03_03_dtft_computation.m) |
+| 04 | Verification of DTFT Properties | [Open Write-Up](practicals/04-practical.md) | [MATLAB Script](MATLAB/04_04_dtft_properties.m) |
+| 05 | DFT | [Open Write-Up](practicals/05-practical.md) | [MATLAB Script](MATLAB/05_05_dft.m) |
 | 06 | Practical 06 | [Open Write-Up](practicals/06-practical.md) | — |
 | 07 | Practical 07 | [Open Write-Up](practicals/07-practical.md) | — |
 | 08 | Practical 08 | [Open Write-Up](practicals/08-practical.md) | — |
