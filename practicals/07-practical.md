@@ -7,30 +7,35 @@ To plot the pole-zero diagram and frequency response of a discrete-time system u
 MATLAB
 
 ## Theory
-A discrete-time linear system can be described by its transfer function:
-\[
-H(z)=\frac{B(z)}{A(z)}
-\]
-The **zeros** are the roots of the numerator \(B(z)\), and the **poles** are the roots of the denominator \(A(z)\). The pole-zero diagram helps examine the system's characteristics and stability. For a causal, stable LTI system, all poles must lie inside the unit circle.
+A discrete-time system can be represented by its **transfer function**:
 
-The frequency response is obtained by evaluating the transfer function on the unit circle, \(z=e^{j\omega}\):
-\[
-H(e^{j\omega})=H(z)\big|_{z=e^{j\omega}}
-\]
-Its magnitude and phase show how the system affects each frequency component.
+$$
+H(z)=\frac{Y(z)}{X(z)}
+$$
+
+Here, $X(z)$ represents the input and $Y(z)$ represents the output in the Z-transform domain.
+
+- **Zeros** are the values that make the numerator of the transfer function equal to zero.
+- **Poles** are the values that make the denominator equal to zero.
+
+The pole-zero plot helps us understand the system's behaviour and stability. For a causal and stable system, all poles must lie inside the unit circle.
 
 ### Given system
-\[
+
+$$
 H(z)=\frac{1}{1+0.5z^{-1}}
-\]
-The system has no finite zeros and a pole at \(z=-0.5\).
+$$
+
+For this system, there are no finite zeros, and the pole is at $z=-0.5$.
+
+The **frequency response** shows how the system changes the magnitude and phase of different frequency components. MATLAB's `freqz()` function calculates this response.
 
 ## Algorithm
 1. Define the numerator and denominator coefficient vectors.
 2. Plot the pole-zero diagram using `zplane()`.
-3. Define digital angular frequency \(\omega\) over the range \(-\pi\) to \(\pi\).
-4. Compute the frequency response using `freqz()`.
-5. Plot magnitude and phase response with axis labels and grid.
+3. Set the digital frequency range from $-\pi$ to $\pi$.
+4. Calculate the frequency response using `freqz()`.
+5. Plot the magnitude and phase responses with proper labels and grid lines.
 
 ## Conclusion
-The pole-zero diagram, magnitude response, and phase response of the given discrete-time system were obtained using MATLAB.
+The pole-zero diagram and the magnitude and phase responses of the given system were obtained using MATLAB.
