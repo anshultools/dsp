@@ -14,7 +14,7 @@ $$
 H(z)=\frac{Y(z)}{X(z)}
 $$
 
-Here, $X(z)$) is the input and $Y(z)$ is the output in the Z-transform domain.
+Here, $X(z)$ is the input and $Y(z)$ is the output in the Z-transform domain.
 
 ### Given transfer function
 
