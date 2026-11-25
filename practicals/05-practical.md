@@ -1,51 +1,46 @@
-# Practical 05 — Discrete Fourier Transform (DFT)
+# Practical 05 — Frequency Component Detection Using DFT
 
 ## Aim
-To generate a composite sinusoidal signal and identify its frequency components using the Discrete Fourier Transform (DFT) in MATLAB.
+To generate a composite signal containing sine waves of different frequencies and identify its frequency components using the Discrete Fourier Transform (DFT).
 
 ## Apparatus
 MATLAB
 
-## Theory
-The **Discrete Fourier Transform (DFT)** converts a finite set of time-domain samples into frequency-domain values. It helps identify the different frequencies present in a signal.
+## Theory and Calculations
 
-In MATLAB, the DFT is calculated using:
+The **DFT** converts a discrete-time signal from the time domain into the frequency domain. It helps us identify the frequencies present in the signal.
 
-```matlab
-X = fft(x, N);
-```
-
-The original time-domain signal can be recovered using the inverse DFT:
-
-```matlab
-x = ifft(X, N);
-```
-
-### Given values
-- Input frequencies: 10 Hz, 50 Hz, and 100 Hz.
-- Sampling frequency: $F_s=4\times100=400\,\text{Hz}$.
-- DFT length: $N=128$ samples.
-
-The three sine waves are added to form the composite signal:
+Three sine waves are generated and added to form a composite signal:
 
 $$
-x[n]=x_1[n]+x_2[n]+x_3[n]
+x(t)=\sin(2\pi f_1t)+\sin(2\pi f_2t)+\sin(2\pi f_3t)
 $$
 
-The frequency spacing between adjacent DFT points is:
+The given frequencies are:
+
+- $f_1=10\,\text{Hz}$
+- $f_2=50\,\text{Hz}$
+- $f_3=100\,\text{Hz}$
+
+The sampling frequency is selected as four times the highest frequency:
 
 $$
-\Delta f=\frac{F_s}{N}=\frac{400}{128}=3.125\,\text{Hz}
+F_s=4\times f_{\max}=4\times100=400\,\text{Hz}
 $$
+
+In MATLAB, the DFT is calculated using `fft()`, and the magnitude spectrum is obtained using `abs()`.
 
 ## Algorithm
-1. Define the three input frequencies and the sampling frequency.
-2. Calculate the sampling interval using $T_s=1/F_s$.
-3. Generate the three sine waves and add them to form the composite signal.
-4. Plot the composite signal in the time domain.
-5. Calculate the DFT using `fft(x,N)`.
-6. Calculate the frequency axis using the sampling frequency and DFT length.
-7. Plot the magnitude spectrum and observe the frequency components.
+
+1. Define the input frequencies as 10 Hz, 50 Hz, and 100 Hz.
+2. Set the sampling frequency to $F_s=400\,\text{Hz}$.
+3. Generate a one-second time vector and create the three sine waves.
+4. Add the three sine waves to create the composite signal.
+5. Set the DFT length to $N=128$ and calculate the DFT magnitude using `abs(fft(x,N))`.
+6. Generate the frequency axis using $F=(F_s/N)k$, where $k=0,1,\ldots,N-1$.
+7. Plot the composite signal and its DFT magnitude spectrum.
+8. Identify the frequency peaks in the spectrum.
 
 ## Conclusion
-A composite signal containing 10 Hz, 50 Hz, and 100 Hz components was generated. Its DFT magnitude spectrum was calculated and plotted in MATLAB.
+
+The composite signal containing 10 Hz, 50 Hz, and 100 Hz components was generated. Its DFT was calculated using MATLAB's `fft()` function, and the frequency components were observed in the magnitude spectrum.
