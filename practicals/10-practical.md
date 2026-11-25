@@ -1,25 +1,27 @@
-# Practical 10 — IIR Low-Pass Filter Using Butterworth Approximation
+# Practical 10 — Design of Low-Pass IIR Butterworth Filter
 
 ## Aim
-To design and implement an Infinite Impulse Response (IIR) low-pass Butterworth filter in MATLAB and observe its filtering effect.
+To design and implement a low-pass Infinite Impulse Response (IIR) filter using Butterworth approximation in MATLAB.
 
 ## Apparatus
 MATLAB
 
-## Theory
-An **IIR filter** uses feedback. This means its output depends on current and previous input samples and also on previous output samples. Its impulse response can continue for an unlimited number of samples.
+## Theory and Calculations
 
-A filter is described by its transfer function:
+An **IIR filter** uses feedback. Its output depends on the present and previous input values as well as previous output values.
+
+The transfer function is simply the output divided by the input in the Z-transform domain:
 
 $$
 H(z)=\frac{Y(z)}{X(z)}
 $$
 
-Here, $X(z)$ is the input and $Y(z)$ is the output in the Z-transform domain.
-
 A **Butterworth filter** has a smooth, maximally flat magnitude response in its passband.
 
+The `buttord()` function calculates the minimum filter order and cutoff frequency needed to meet the passband and stopband requirements.
+
 ### Given filter specifications
+
 - Normalized passband edge: $W_p=0.2$.
 - Normalized stopband edge: $W_s=0.3$.
 - Maximum passband ripple: $R_p=1\,\text{dB}$.
@@ -27,22 +29,24 @@ A **Butterworth filter** has a smooth, maximally flat magnitude response in its 
 
 For MATLAB's digital filter design functions, a normalized frequency of 1 represents the Nyquist frequency, which is half the sampling frequency.
 
-### MATLAB functions used
-- `buttord()` calculates the required Butterworth filter order and cutoff frequency.
-- `butter()` designs the Butterworth filter and returns its coefficients.
-- `freqz()` displays the magnitude and phase frequency responses.
-- `filter()` applies the filter to the input signal.
+The input signal contains two sine waves:
+
+- Low-frequency component: 50 Hz.
+- High-frequency component: 350 Hz.
+
+The sampling frequency used in the MATLAB script is 1000 Hz.
 
 ## Algorithm
-1. Clear the MATLAB workspace and close all figures.
-2. Enter the normalized passband and stopband frequencies as 0.2 and 0.3.
-3. Set the passband ripple to 1 dB and stopband attenuation to 20 dB.
-4. Use `buttord()` to calculate the filter order and cutoff frequency.
-5. Use `butter()` to design the IIR Butterworth filter.
-6. Plot its magnitude and phase responses using `freqz()`.
-7. Generate an input signal containing 50 Hz and 350 Hz components, using the sampling frequency specified in the MATLAB script.
-8. Apply the filter using `filter()` and plot the original and filtered signals.
-9. Compare the plots to observe attenuation of the high-frequency component.
+
+1. Set the normalized passband edge to $W_p=0.2$ and stopband edge to $W_s=0.3$.
+2. Set the maximum passband ripple to 1 dB and minimum stopband attenuation to 20 dB.
+3. Use `buttord(Wp,Ws,Rp,Rs)` to calculate the filter order and cutoff frequency.
+4. Use `butter()` to calculate the numerator and denominator coefficients of the filter.
+5. Plot the filter frequency response using `freqz()`.
+6. Generate a composite input signal by adding 50 Hz and 350 Hz sine waves. Use a sampling frequency of 1000 Hz.
+7. Apply the filter using `filter()`.
+8. Plot the original and filtered signals and observe the attenuation of the 350 Hz component.
 
 ## Conclusion
-An IIR low-pass Butterworth filter was designed and implemented in MATLAB. Its frequency response and effect on the input signal were observed by comparing the original and filtered signals.
+
+A low-pass IIR Butterworth filter was designed and implemented in MATLAB. The 50 Hz component lies in the passband and is allowed to pass, while the 350 Hz component lies in the stopband and is attenuated.
