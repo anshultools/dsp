@@ -1,82 +1,84 @@
 # Practical 01 — Verification of Sampling Theorem
 
-## Write-Up
+## Aim
+To verify the Sampling Theorem using MATLAB.
 
-**Aim:** To verify the Sampling Theorem using MATLAB.
+## Apparatus
+MATLAB software.
 
-**Apparatus:** MATLAB
+## Theory
 
-## Theory and Derivation
+The **Sampling Theorem** says that a continuous signal can be represented by its samples when the sampling frequency is at least twice the highest frequency present in the signal.
 
-The Sampling Theorem states that a continuous-time band-limited signal can be represented by its samples and reconstructed without distortion if the sampling frequency \(F_s\) is at least twice the highest frequency component \(F_{\max}\):
+**Sampling frequency (Fs):** how many samples are taken per second (Hz).  
+**Highest signal frequency (Fmax):** the highest frequency component in the signal.
 
-\[
-F_s \geq 2F_{\max}
-\]
+The condition is:
 
-In practice, a sampling frequency greater than the Nyquist rate is preferred for reconstruction using real filters.
+**Fs ≥ 2 × Fmax**
 
-### Signal equations
+The minimum sampling frequency, **2 × Fmax**, is called the **Nyquist rate**. In practical signal reconstruction, sampling a little faster than the Nyquist rate is usually preferred.
 
-Continuous-time sinusoid:
+### Signal used
 
-\[
-x(t)=A\cos(2\pi ft)
-\]
+A sine wave is:
 
-Sampled signal, at \(t=n/F_s\):
+**x(t) = A cos(2πft)**
 
-\[
-x[n]=A\cos\left(2\pi f\frac{n}{F_s}\right)
-\]
+where:
+- **A** = amplitude of the signal
+- **f** = signal frequency in Hz
+- **t** = time in seconds
 
-### Part 1 — Under-sampling (\(F_1=10\) Hz, \(F_2=50\) Hz, \(F_s=40\) Hz)
+When we sample it at frequency **Fs**, the sample times are **t = n/Fs**, where **n = 0, 1, 2, 3, ...**. The sampled signal becomes:
 
-For the 50 Hz signal, \(2F_2=100\) Hz is greater than the sampling frequency of 40 Hz, so the Nyquist criterion is not met and aliasing occurs.
+**x[n] = A cos(2πfn/Fs)**
 
-For \(F_1=10\) Hz:
+## Part 1 — Under-sampling (Fs = 40 Hz)
 
-\[
-x_1[n]=A\cos\left(2\pi\frac{10}{40}n\right)
-=A\cos\left(\frac{\pi}{2}n\right)
-\]
+We use two signals:
+- Signal 1: f1 = 10 Hz
+- Signal 2: f2 = 50 Hz
+- Sampling frequency: Fs = 40 Hz
 
-For \(F_2=50\) Hz:
+For the 10 Hz signal:
 
-\[
-\begin{aligned}
-x_2[n]&=A\cos\left(2\pi\frac{50}{40}n\right)\\
-&=A\cos\left(\frac{5\pi}{2}n\right)\\
-&=A\cos\left(2\pi n+\frac{\pi}{2}n\right)\\
-&=A\cos\left(\frac{\pi}{2}n\right)
-\end{aligned}
-\]
+**x1[n] = A cos(2π × 10 × n/40)**  
+**x1[n] = A cos(πn/2)**
 
-Therefore, the two sampled signals are identical: the 50 Hz signal aliases to 10 Hz at this sampling rate.
+For the 50 Hz signal:
 
-### Part 2 — Nyquist-rate sampling (\(F_s=100\) Hz)
+**x2[n] = A cos(2π × 50 × n/40)**  
+**x2[n] = A cos(5πn/2)**
 
-Normalized frequencies are:
+Since cosine repeats every 2π, the term 2πn does not change the sample values. Therefore:
 
-\[
-\frac{F_1}{F_s}=\frac{10}{100}=0.1
-\]
+**x2[n] = A cos(πn/2)**
 
-\[
-\frac{F_2}{F_s}=\frac{50}{100}=0.5
-\]
+So, **both signals have the same sample values** when sampled at 40 Hz. The 50 Hz signal appears like a 10 Hz signal after sampling. This effect is called **aliasing**.
 
-At 100 Hz, the 50 Hz signal is sampled at the Nyquist limit, and its samples are distinguishable from those of the 10 Hz signal.
+## Part 2 — Sampling at the Nyquist rate (Fs = 100 Hz)
+
+For the highest signal frequency (50 Hz), the Nyquist rate is:
+
+**Fs = 2 × 50 = 100 Hz**
+
+At this sampling rate:
+- 10 Hz signal: 10/100 = 0.1 cycles per sample
+- 50 Hz signal: 50/100 = 0.5 cycles per sample
+
+The sampled signals can now be distinguished. The 50 Hz signal is sampled exactly at the Nyquist limit.
 
 ## Algorithm
 
-1. Clear the command window, workspace, and previous figures using `clc`, `clear`, and `close all`.
-2. Set amplitude \(A=1\), frequencies \(f_1=10\) Hz and \(f_2=50\) Hz, and initially set \(F_s=40\) Hz.
-3. Generate the continuous-time vector `t = 0:0.001:1`, calculate both continuous signals, and plot them.
-4. Generate sample instants `n = 0:1/Fs:1`, calculate both discrete signals, and compare the sample points with the continuous waveforms.
-5. Repeat the sampling comparison with \(F_s=100\) Hz.
-6. Stop.
+1. Clear the command window, workspace, and figures.
+2. Set amplitude A = 1, signal frequencies f1 = 10 Hz and f2 = 50 Hz.
+3. Set the sampling frequency Fs = 40 Hz.
+4. Generate the continuous-time signals and plot them.
+5. Sample both signals at Fs = 40 Hz and plot the sample points over the continuous signals.
+6. Change the sampling frequency to Fs = 100 Hz and repeat the comparison.
+7. Observe the sample points and stop.
 
 ## Conclusion
 
-At \(F_s=40\) Hz, aliasing occurs: the 10 Hz and 50 Hz sinusoids produce identical samples. At \(F_s=100\) Hz, the sampling rate reaches the Nyquist limit for the 50 Hz signal. For practical reconstruction with real filters, a sampling frequency greater than twice the maximum signal frequency is preferred.
+At a sampling frequency of 40 Hz, the 10 Hz and 50 Hz signals produce the same sample values, so aliasing occurs. At 100 Hz, the sampling frequency equals twice the highest signal frequency (50 Hz), which is the Nyquist rate. In practice, a sampling frequency higher than the Nyquist rate is preferred for accurate reconstruction.
