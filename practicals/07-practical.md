@@ -1,41 +1,93 @@
-# Practical 07 — Pole-Zero Plot and Frequency Response
+# Practical 07 — Pole-Zero Plot and Frequency Response Using Z-Transform
 
 ## Aim
-To plot the pole-zero diagram and frequency response of a discrete-time system using MATLAB.
+To plot the pole-zero diagram and the magnitude and phase frequency responses of a discrete-time system using MATLAB.
 
 ## Apparatus
 MATLAB
 
-## Theory
-A discrete-time system can be represented by its **transfer function**:
+## Theory and Calculations
+
+A discrete-time system can be described by its **transfer function**:
 
 $$
 H(z)=\frac{Y(z)}{X(z)}
 $$
 
-Here, $X(z)$ represents the input and $Y(z)$ represents the output in the Z-transform domain.
+Here, $X(z)$) is the input and $Y(z)$ is the output in the Z-transform domain.
 
-- **Zeros** are the values that make the numerator of the transfer function equal to zero.
-- **Poles** are the values that make the denominator equal to zero.
-
-The pole-zero plot helps us understand the system's behaviour and stability. For a causal and stable system, all poles must lie inside the unit circle.
-
-### Given system
+### Given transfer function
 
 $$
-H(z)=\frac{1}{1+0.5z^{-1}}
+H(z)=\frac{1}{1+0.25z^{-1}}
 $$
 
-For this system, there are no finite zeros, and the pole is at $z=-0.5$.
+Multiplying the numerator and denominator by $z$ gives:
 
-The **frequency response** shows how the system changes the magnitude and phase of different frequency components. MATLAB's `freqz()` function calculates this response.
+$$
+H(z)=\frac{z}{z+0.25}
+$$
+
+- **Zero:** $z=0$
+- **Pole:** $z=-0.25$
+
+### Frequency response
+
+To find the frequency response, replace $z$ with $e^{j\omega}$:
+
+$$
+H(e^{j\omega})=\frac{1}{1+0.25e^{-j\omega}}
+$$
+
+Using Euler's formula, $e^{-j\omega}=\cos\omega-j\sin\omega$:
+
+$$
+H(e^{j\omega})=
+\frac{1}{(1+0.25\cos\omega)-j(0.25\sin\omega)}
+$$
+
+### Magnitude response
+
+The magnitude response is:
+
+$$
+|H(e^{j\omega})|=
+\frac{1}{\sqrt{1.0625+0.5\cos\omega}}
+$$
+
+At $\omega=0$:
+
+$$
+|H(e^{j0})|=0.8
+$$
+
+At $\omega=\pi$:
+
+$$
+|H(e^{j\pi})|\approx1.333
+$$
+
+### Phase response
+
+The phase response is:
+
+$$
+\angle H(e^{j\omega})=
+\tan^{-1}\left(\frac{0.25\sin\omega}{1+0.25\cos\omega}\right)
+$$
+
+MATLAB calculates the pole-zero plot using `zplane()` and the frequency response using `freqz()`.
 
 ## Algorithm
-1. Define the numerator and denominator coefficient vectors.
-2. Plot the pole-zero diagram using `zplane()`.
-3. Set the digital frequency range from $-\pi$ to $\pi$.
-4. Calculate the frequency response using `freqz()`.
-5. Plot the magnitude and phase responses with proper labels and grid lines.
+
+1. Define the numerator as `num = [1]` and denominator as `den = [1 0.25]`.
+2. Plot the poles and zeros using `zplane(num,den)`.
+3. Define the frequency range from $-\pi$ to $\pi$.
+4. Calculate the frequency response using `freqz(num,den,w)`.
+5. Calculate the magnitude using `abs(H)` and phase using `angle(H)`.
+6. Plot the magnitude and phase responses against frequency.
+7. Compare the MATLAB plots with the calculated values.
 
 ## Conclusion
-The pole-zero diagram and the magnitude and phase responses of the given system were obtained using MATLAB.
+
+The pole-zero plot and frequency response of the given system were obtained using MATLAB. The system has a zero at the origin and a pole at $-0.25$. The magnitude and phase plots were compared with the theoretical calculations.
