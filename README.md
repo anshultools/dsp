@@ -9,7 +9,7 @@ Digital Signal Processing (DSP) practicals and MATLAB code.
 | 01 | Verification of Sampling Theorem | [Open Write-Up](practicals/01-practical.md) | [MATLAB Script](MATLAB/01_sampling_theorem.m) |
 | 02 | Solution of Difference Equation with Initial Condition | [Open Write-Up](practicals/02-practical.md) | [MATLAB Script](MATLAB/02_difference_equation.m) |
 | 03 | Computation of DTFT | [Open Write-Up](practicals/03-practical.md) | [MATLAB Script](MATLAB/03_dtft_computation.m) |
-| 04 | Verification of DTFT Properties | [Open Write-Up](practicals/04-practical.md) | [MATLAB Script](MATLAB/04_dtft_properties.m) |
+| 04 | Time-Shifting Property of DTFT | [Open Write-Up](practicals/04-practical.md) | [MATLAB Script](MATLAB/04_dtft_properties.m) |
 | 05 | DFT | [Open Write-Up](practicals/05-practical.md) | [MATLAB Script](MATLAB/05_dft.m) |
 | 06 | Verification of DFT Properties | [Open Write-Up](practicals/06-practical.md) | [MATLAB Script](MATLAB/06_dft_properties.m) |
 | 07 | Pole-Zero Plot and Frequency Response | [Open Write-Up](practicals/07-practical.md) | [MATLAB Script](MATLAB/07_pole_zero_frequency_response.m) |
