@@ -1,16 +1,24 @@
 % Practical 03 - Computation of DTFT
 clc;
 clear;
-close;
-w = -pi:0.001:pi;
-x = 1;
-deno = ones(1,length(w))+0.25*exp(-1j*w);
-y = x./deno;
-xmag = abs(y);
-xphase = angle(y);
+close all;
+
+w = -pi:0.01:pi;
+X = 1 ./ (1 - 0.25*exp(-1j*w));
+Xmag = abs(X);
+Xphase = angle(X);
+
+figure;
 subplot(2,1,1);
-plot(w,xmag);
-title('Magnitude Response'); xlabel('Frequency'); ylabel('Magnitude'); grid on;
+plot(w,Xmag,'LineWidth',1.2);
+title('Magnitude Spectrum');
+xlabel('Digital Frequency (rad/sample)');
+ylabel('|X(e^{j\omega})|');
+grid on;
+
 subplot(2,1,2);
-plot(w,xphase);
-title('Phase Response'); xlabel('Frequency'); ylabel('Phase'); grid on;
+plot(w,Xphase,'LineWidth',1.2);
+title('Phase Spectrum');
+xlabel('Digital Frequency (rad/sample)');
+ylabel('Phase (radians)');
+grid on;
