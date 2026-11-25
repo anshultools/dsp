@@ -3,7 +3,7 @@ clc;
 clear all;
 close all;
 num = [1];
-den = [1 0.5];
+den = [1 0.25];
 
 % Pole-zero plot
 figure;
