@@ -1,54 +1,37 @@
 # Practical 03 — Computation of DTFT
 
 ## Aim
-To compute and plot the magnitude and phase spectra of the Discrete-Time Fourier Transform (DTFT) of \(x[n]=(0.25)^n u[n]\).
+To calculate and plot the magnitude and phase of the Discrete-Time Fourier Transform (DTFT) of the signal $x[n]=(0.25)^n u[n]$.
 
 ## Apparatus
 MATLAB
 
-## Theory and Derivation
-The DTFT of a discrete-time sequence is defined as:
+## Theory
+The **DTFT** converts a discrete-time signal into its frequency-domain representation.
 
-\[
-X(e^{j\omega})=\sum_{n=-\infty}^{\infty}x[n]e^{-j\omega n}
-\]
+The input signal is:
 
-It is a continuous function of digital frequency \(\omega\) and repeats every \(2\pi\).
-
-Given:
-\[
+$$
 x[n]=(0.25)^n u[n]
-\]
-where \(u[n]=1\) for \(n\geq0\), and \(u[n]=0\) for \(n<0\).
+$$
 
-\[
-\begin{aligned}
-X(e^{j\omega})&=\sum_{n=0}^{\infty}(0.25)^n e^{-j\omega n}\\
-&=\sum_{n=0}^{\infty}(0.25e^{-j\omega})^n
-\end{aligned}
-\]
+Here, $u[n]$ is the unit-step signal. It is 1 for $n\geq0$ and 0 for $n<0$.
 
-Using the geometric-series formula \(\sum_{n=0}^{\infty}r^n=1/(1-r)\) for \(|r|<1\):
+For this signal, the DTFT is:
 
-\[
-\boxed{X(e^{j\omega})=\frac{1}{1-0.25e^{-j\omega}}}
-\]
+$$
+X(e^{j\omega})=\frac{1}{1-0.25e^{-j\omega}}
+$$
 
-Since \(|0.25e^{-j\omega}|=0.25<1\), the series converges. An equivalent form is:
-
-\[
-X(e^{j\omega})=\frac{e^{j\omega}}{e^{j\omega}-0.25}
-\]
-
-The magnitude and phase are \(|X(e^{j\omega})|\) and \(\angle X(e^{j\omega})\), respectively.
+The magnitude of the DTFT is $|X(e^{j\omega})|$, and its phase is $\angle X(e^{j\omega})$. The DTFT repeats after every $2\pi$ radians.
 
 ## Algorithm
-1. Clear the workspace and figures.
-2. Create the digital frequency vector \(\omega=-\pi:0.01:\pi\).
-3. Evaluate \(X(e^{j\omega})=1/(1-0.25e^{-j\omega})\).
-4. Calculate magnitude using `abs()` and phase using `angle()`.
-5. Plot magnitude and phase against \(\omega\) using two subplots.
-6. Stop.
+1. Clear the MATLAB workspace and close all figures.
+2. Create a frequency vector from $-\pi$ to $\pi$ using a step of 0.01.
+3. Calculate the DTFT using `X = 1 ./ (1 - 0.25 * exp(-1j*w))`.
+4. Calculate the magnitude using `abs(X)`.
+5. Calculate the phase using `angle(X)`.
+6. Plot the magnitude and phase in two separate subplots.
 
 ## Conclusion
-The DTFT of \(x[n]=(0.25)^n u[n]\) was derived and its magnitude and phase spectra were computed and plotted in MATLAB.
+The DTFT of $x[n]=(0.25)^n u[n]$ was calculated. Its magnitude and phase spectra were plotted using MATLAB.
