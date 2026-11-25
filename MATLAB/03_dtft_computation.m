@@ -2,12 +2,10 @@
 clc;
 clear;
 close all;
-
 w = -pi:0.01:pi;
 X = 1 ./ (1 - 0.25*exp(-1j*w));
 Xmag = abs(X);
 Xphase = angle(X);
-
 figure;
 subplot(2,1,1);
 plot(w,Xmag,'LineWidth',1.2);
@@ -15,7 +13,6 @@ title('Magnitude Spectrum');
 xlabel('Digital Frequency (rad/sample)');
 ylabel('|X(e^{j\omega})|');
 grid on;
-
 subplot(2,1,2);
 plot(w,Xphase,'LineWidth',1.2);
 title('Phase Spectrum');
