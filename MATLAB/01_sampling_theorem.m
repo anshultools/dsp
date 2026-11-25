@@ -1,0 +1,27 @@
+% Practical 01 - Verification of Sampling Theorem
+clc;
+clear;
+close all;
+a = 5;
+f1 = 10;
+f2 = 50;
+fs = 40;
+t = 0:0.001:1;
+x1 = a*cos(2*pi*f1*t);
+x2 = a*cos(2*pi*f2*t);
+n = 0:1/fs:1;
+x3 = a*cos(2*pi*f1*n);
+x4 = a*cos(2*pi*f2*n);
+figure;
+subplot(4,1,1);
+plot(t,x1,"LineWidth",1.5);
+title('Continuous Signal x1'); xlabel('Time (s)'); ylabel('Amplitude'); grid on;
+subplot(4,1,2);
+plot(t,x2,"LineWidth",1.5);
+title('Continuous Signal x2'); xlabel('Time (s)'); ylabel('Amplitude'); grid on;
+subplot(4,1,3);
+stem(n,x3,"filled");
+title('Discrete Signal x3'); xlabel('Time (s)'); ylabel('Amplitude'); grid on;
+subplot(4,1,4);
+stem(n,x4,"filled");
+title('Discrete Signal x4'); xlabel('Time (s)'); ylabel('Amplitude'); grid on;
