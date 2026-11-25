@@ -2,11 +2,9 @@
 clc;
 clear;
 close all;
-
 A = 1;
 f1 = 10;
 f2 = 50;
-
 % Part 1: Under-sampling at Fs = 40 Hz
 Fs = 40;
 t = 0:0.001:1;
@@ -15,7 +13,6 @@ x2 = A*cos(2*pi*f2*t);
 n = 0:1/Fs:1;
 xs1 = A*cos(2*pi*f1*n);
 xs2 = A*cos(2*pi*f2*n);
-
 figure;
 subplot(2,1,1);
 plot(t,x1,'b','LineWidth',1.3); hold on;
@@ -25,14 +22,12 @@ stem(n,xs2,'r','filled');
 title('Sampling at Fs = 40 Hz (Aliasing)');
 xlabel('Time (s)'); ylabel('Amplitude'); grid on;
 legend('10 Hz continuous','10 Hz samples','50 Hz continuous','50 Hz samples');
-
 subplot(2,1,2);
 stem(n,xs1,'b','filled'); hold on;
 stem(n,xs2,'r','filled');
 title('Discrete Samples: 10 Hz and 50 Hz Signals');
 xlabel('Sample time (s)'); ylabel('Amplitude'); grid on;
 legend('10 Hz samples','50 Hz samples');
-
 % Part 2: Nyquist-rate sampling at Fs = 100 Hz
 Fs = 100;
 n = 0:1/Fs:1;
