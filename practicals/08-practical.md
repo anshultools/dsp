@@ -1,38 +1,20 @@
-# Practical 08 — Low-Pass FIR Filter Using Rectangular Window
+# Practical 08 — Design of Low-Pass FIR Filter Using Rectangular Window
 
 ## Aim
-To design and implement a low-pass Finite Impulse Response (FIR) filter using a rectangular window in MATLAB and observe its frequency response and filtering effect.
+To design and implement a low-pass FIR filter using a rectangular window in MATLAB.
 
 ## Apparatus
 MATLAB
 
-## Theory
+## Theory and Calculations
 
-### 1. FIR low-pass filter
-A **low-pass filter** allows low-frequency components to pass and reduces high-frequency components.
+A **low-pass FIR filter** allows low-frequency components to pass and attenuates high-frequency components.
 
-An FIR filter uses a fixed number of input samples to calculate its output. Its equation can be written in a simple form as:
+A rectangular window keeps a fixed number of filter samples and makes the filter finite in length. It is simple to use, but it produces more ripples in the frequency response than a Hamming window.
 
-$$
-y[n]=b_0x[n]+b_1x[n-1]+\ldots+b_Mx[n-M]
-$$
+### Input signal
 
-Here, $b_0,b_1,\ldots,b_M$ are the filter coefficients, and $M$ is the filter order.
-
-### 2. Rectangular window
-A rectangular window keeps the selected filter samples and removes the samples outside that range:
-
-- $w_R[n]=1$ for sample numbers from 0 to $M$.
-- $w_R[n]=0$ for all other sample numbers.
-
-The rectangular window is simple to use, but it produces more ripples in the stopband than windows such as the Hamming window.
-
-### 3. Given filter specifications
-The input signal contains three sine waves:
-
-- $f_1=10\,\text{Hz}$
-- $f_2=20\,\text{Hz}$
-- $f_3=30\,\text{Hz}$
+The input is a composite signal made by adding sine waves at 10 Hz, 20 Hz, and 30 Hz.
 
 The sampling frequency is four times the highest input frequency:
 
@@ -40,9 +22,18 @@ $$
 F_s=4\times30=120\,\text{Hz}
 $$
 
-The passband edge is 10 Hz, and the stopband edge is 14 Hz.
+### Filter specifications
 
-The cutoff frequency is selected halfway between these two edges:
+- Passband edge frequency: $f_p=10\,\text{Hz}$.
+- Stopband edge frequency: $f_{st}=14\,\text{Hz}$.
+
+The normalized transition width is:
+
+$$
+\Delta f=\frac{14-10}{120}=0.0333
+$$
+
+The cutoff frequency is the midpoint between the passband and stopband edges:
 
 $$
 f_c=\frac{10+14}{2}=12\,\text{Hz}
@@ -54,39 +45,39 @@ $$
 W_c=\frac{2f_c}{F_s}=\frac{2\times12}{120}=0.2
 $$
 
-The normalized transition width is:
+For the rectangular window used in the MATLAB script, the approximate window length is:
 
 $$
-\Delta f=\frac{14-10}{120}=0.0333
+L=\left\lceil\frac{0.9}{0.0333}\right\rceil=27
 $$
 
-The filter length and order are:
+The filter order is one less than the window length:
 
 $$
-L=\left\lceil\frac{3.3}{0.0333}\right\rceil=99
+M=L-1=26
 $$
 
-$$
-M=L-1=98
-$$
+### MATLAB functions used
 
-### 4. MATLAB functions used
-- `fir1()` designs the FIR filter coefficients.
-- `rectwin(L)` generates a rectangular window of length $L$.
-- `freqz()` displays the filter's magnitude and phase responses.
+- `rectwin(L)` generates the rectangular window.
+- `fir1()` calculates the FIR filter coefficients.
+- `freqz()` displays the magnitude and phase responses.
 - `filter()` applies the filter to the input signal.
-- `fft()` calculates the frequency components of a signal.
+- `fft()` calculates the frequency spectrum.
 
 ## Algorithm
-1. Clear the MATLAB workspace and close all figures.
-2. Generate sine waves at 10 Hz, 20 Hz, and 30 Hz, and add them to form the input signal.
-3. Set the sampling frequency to 120 Hz.
+
+1. Define the input frequencies as 10 Hz, 20 Hz, and 30 Hz.
+2. Set the sampling frequency to $F_s=120\,\text{Hz}$.
+3. Generate a one-second composite signal by adding the three sine waves.
 4. Set the passband edge to 10 Hz and the stopband edge to 14 Hz.
-5. Calculate the cutoff frequency, transition width, filter length, and filter order.
-6. Generate the rectangular window and design the low-pass FIR filter using `fir1()`.
-7. Plot the frequency response using `freqz()`.
-8. Apply the filter using `filter()`.
-9. Compare the frequency spectra of the original and filtered signals using FFT plots.
+5. Calculate the normalized transition width, cutoff frequency, window length, and filter order.
+6. Generate the rectangular window using `rectwin(L)`.
+7. Design the low-pass FIR filter using `fir1()`.
+8. Display the filter response using `freqz()`.
+9. Apply the filter using `filter()`.
+10. Calculate the FFT magnitude of the original and filtered signals and plot them for comparison.
 
 ## Conclusion
-A low-pass FIR filter was designed using a rectangular window in MATLAB. The frequency response and the effect of the filter on the composite input signal were observed.
+
+The low-pass FIR filter was designed and implemented using a rectangular window in MATLAB. The frequency spectra were compared to observe the passing of the 10 Hz component and attenuation of the higher-frequency components.
