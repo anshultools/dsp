@@ -15,6 +15,8 @@ Digital Signal Processing (DSP) practicals and MATLAB code.
 | 07 | Pole-Zero Plot and Frequency Response | [Open Write-Up](practicals/07-practical.md) | [MATLAB Script](MATLAB/07_pole_zero_frequency_response.m) |
 | 08 | Low-Pass FIR Filter Using Rectangular Window | [Open Write-Up](practicals/08-practical.md) | [MATLAB Script](MATLAB/08_fir_rectangular.m) |
 | 09 | Low-Pass FIR Filter Using Hamming Window | [Open Write-Up](practicals/09-practical.md) | [MATLAB Script](MATLAB/09_fir_hamming.m) |
+| 09A | High-Pass FIR Filter Using Hamming Window | [Open Write-Up](practicals/09A-practical.md) | [MATLAB Script](MATLAB/09A_fir_highpass_hamming.m) |
+| 09B | Band-Pass FIR Filter Using Hamming Window | [Open Write-Up](practicals/09B-practical.md) | [MATLAB Script](MATLAB/09B_fir_bandpass_hamming.m) |
 | 10 | IIR Filter (Butterworth Approximation) | [Open Write-Up](practicals/10-practical.md) | [MATLAB Script](MATLAB/10_iir_butterworth.m) |
 
 ## Quick Access
@@ -28,4 +30,4 @@ Digital Signal Processing (DSP) practicals and MATLAB code.
 
 ---
 
-*Practicals 01–10 write-ups and MATLAB scripts are organized in this repository.*
+*Practicals 01–10, including Practical 09A and 09B, and their MATLAB scripts are organized in this repository.*
