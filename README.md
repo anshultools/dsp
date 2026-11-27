@@ -18,6 +18,7 @@ Digital Signal Processing (DSP) practicals and MATLAB code.
 | 09A | High-Pass FIR Filter Using Hamming Window | [Open Write-Up](practicals/09A-practical.md) | [MATLAB Script](MATLAB/09A_fir_highpass_hamming.m) |
 | 09B | Band-Pass FIR Filter Using Hamming Window | [Open Write-Up](practicals/09B-practical.md) | [MATLAB Script](MATLAB/09B_fir_bandpass_hamming.m) |
 | 10 | IIR Filter (Butterworth Approximation) | [Open Write-Up](practicals/10-practical.md) | [MATLAB Script](MATLAB/10_iir_butterworth.m) |
+| 11 | ACDC LINE CODE | — | [MATLAB Script](MATLAB/11_acdc_line_code.m) |
 
 ## Quick Access
 - [Practicals folder](practicals/)
@@ -30,4 +31,4 @@ Digital Signal Processing (DSP) practicals and MATLAB code.
 
 ---
 
-*Practicals 01–10, including Practical 09A and 09B, and their MATLAB scripts are organized in this repository.*
+*Practicals 01–11, including Practical 09A and 09B, and their MATLAB scripts are organized in this repository.*
